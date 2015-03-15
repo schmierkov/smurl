@@ -21,13 +21,6 @@ class LinkTest < ActiveSupport::TestCase
     assert_equal false, @link.valid?
   end
 
-  test 'original_url normalization' do
-    @link.original_url = 'google.de'
-
-    assert_equal true, @link.valid?
-    assert_equal 'http://google.de', @link.original_url
-  end
-
   test 'generates token' do
     @link.token = nil
     assert_equal nil, @link.token

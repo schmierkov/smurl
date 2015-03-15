@@ -7,7 +7,7 @@ class LinksController < ApplicationController
   end
 
   def create
-    @link = Link.where(link_params).first_or_create
+    @link = Link.where(original_url: normalized_url).first_or_create
 
     if @link.persisted?
       render :show
@@ -32,11 +32,16 @@ class LinksController < ApplicationController
     end
   end
 
-  def link_params
-    params.permit(:original_url)
-  end
-
   def link_token
     params.permit(:token)
+  end
+
+  def normalized_url
+    uri = URI.parse(params[:original_url])
+    url = uri.normalize.to_s
+    url = "http://#{url}" if uri.scheme.nil?
+    url
+  rescue URI::InvalidURIError
+    nil
   end
 end
