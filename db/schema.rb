@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315090002) do
+ActiveRecord::Schema.define(version: 20150315115112) do
 
   create_table "links", force: true do |t|
     t.string   "token"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150315090002) do
     t.datetime "updated_at",   null: false
   end
 
+  add_index "links", ["original_url"], name: "index_links_on_original_url", unique: true
   add_index "links", ["token"], name: "index_links_on_token", unique: true
 
 end
