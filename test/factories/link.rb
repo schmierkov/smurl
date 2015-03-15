@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :link do
-    token 'FOOfoOo'
+    token ''
     original_url 'http://example.org/foofoo'
   end
 end
