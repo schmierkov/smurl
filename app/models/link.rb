@@ -19,12 +19,14 @@ class Link < ActiveRecord::Base
   end
 
   def original_url_format_valid?
-    errors.add(:original_url, "is invalid.") unless is_url?(original_url)
+    errors.add(:original_url, "is invalid.") unless normalize(original_url)
   end
 
-  def is_url?(url)
+  def normalize(url)
     uri = URI.parse(url)
-    uri.kind_of?(URI::HTTP)
+    url = uri.normalize.to_s
+    url = "http://#{url}" if uri.scheme.nil?
+    self.original_url = url
   rescue URI::InvalidURIError
     false
   end
