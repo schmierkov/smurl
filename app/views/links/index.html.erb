@@ -1,0 +1,18 @@
+<%= form_tag('/links', method: :post, autocomplete: "off") do %>
+  <div class="form-group">
+    <%= text_field_tag(:original_url, '', class: "form-control") %>
+  </div>
+  <%= submit_tag 'Shorten Now!', class: "btn btn-default" %>
+<% end %>
+<br>
+<br>
+
+<p>
+  Latest shortenings
+</p>
+
+<ul>
+  <% @links.each do |link| %>
+    <li><%= link.original_url %></li>
+  <% end %>
+</ul>
