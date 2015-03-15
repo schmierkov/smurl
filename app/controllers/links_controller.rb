@@ -19,6 +19,7 @@ class LinksController < ApplicationController
   def show
     @link = Link.where(link_token).first
 
+    @link.update(hits: @link.hits + 1)
     render nothing: true, status: 301, location: @link.original_url, layout: false
   end
 

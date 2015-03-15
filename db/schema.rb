@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315115112) do
+ActiveRecord::Schema.define(version: 20150315150545) do
 
   create_table "links", force: true do |t|
     t.string   "token"
     t.text     "original_url"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "hits",         default: 0
   end
 
   add_index "links", ["original_url"], name: "index_links_on_original_url", unique: true
