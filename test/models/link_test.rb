@@ -29,8 +29,9 @@ class LinkTest < ActiveSupport::TestCase
   end
 
   test 'generates token' do
-    assert_equal 0, @link.token.length
-    assert_equal true, @link.valid?
-    assert_equal 7, @link.token.length
+    @link.token = nil
+    assert_equal nil, @link.token
+    assert_equal true, @link.save
+    assert_equal 7, @link.token.size
   end
 end
