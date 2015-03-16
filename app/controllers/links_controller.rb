@@ -16,10 +16,12 @@ class LinksController < ApplicationController
   end
 
   def show
-    @link = Link.where(link_token).first
-
-    @link.update(hits: @link.hits + 1)
-    render nothing: true, status: 301, location: @link.original_url, layout: false
+    if link = Link.where(link_token_param).first
+      link.update(hits: link.hits + 1)
+      render nothing: true, status: 301, location: link.original_url, layout: false
+    else
+      render nothing: true, status: 404
+    end
   end
 
   private
@@ -31,12 +33,16 @@ class LinksController < ApplicationController
     end
   end
 
-  def link_token
+  def link_token_param
     params.permit(:token)
   end
 
+  def original_url_param
+    params.require(:original_url)
+  end
+
   def normalized_url
-    uri = URI.parse(params[:original_url])
+    uri = URI.parse(original_url_param)
     url = uri.normalize.to_s
     url = "http://#{url}" if uri.scheme.nil?
     url
