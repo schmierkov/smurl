@@ -4,15 +4,3 @@
   </div>
   <%= submit_tag 'Shorten Now!', class: "btn btn-default" %>
 <% end %>
-<br>
-<br>
-
-<p>
-  Latest shortenings
-</p>
-
-<ul>
-  <% @links.each do |link| %>
-    <li><%= link_to link.original_url, link_url(token: link.token) %></li>
-  <% end %>
-</ul>
