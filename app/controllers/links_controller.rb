@@ -3,7 +3,7 @@ class LinksController < ApplicationController
   before_filter :clean_up
 
   def index
-    @links = Link.last(10)
+    @links = []
   end
 
   def create
