@@ -4,3 +4,27 @@
   </div>
   <%= submit_tag 'Shorten Now!', class: "btn btn-default" %>
 <% end %>
+
+<br>
+<div id="result"></div>
+
+<script>
+  <!--
+    $("form").submit(function( event ) {
+      event.preventDefault();
+
+      var $form = $(this),
+        url_param = $form.find("input[name='original_url']").val(),
+        url = $form.attr("action");
+
+      var posting = $.post(url, { original_url: url_param } );
+      posting.done(function(data) {
+        $("#result").empty().append(data.token_url);
+      });
+    });
+
+    $('#original_url').keydown(function() {
+      $("#result").empty();
+    });
+  //-->
+</script>

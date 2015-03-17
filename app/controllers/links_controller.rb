@@ -1,15 +1,16 @@
 class LinksController < ApplicationController
 
+  skip_before_filter :verify_authenticity_token, only: [:create]
   before_filter :clean_up
 
   def index
   end
 
   def create
-    @link = Link.where(original_url: normalized_url).first_or_create
+    link = Link.where(original_url: normalized_url).first_or_create
 
-    if @link.persisted?
-      render :show
+    if link.persisted?
+      render json: { original_url: link.original_url, token_url: link_url(token: link.token) }
     else
       redirect_to root_path
     end

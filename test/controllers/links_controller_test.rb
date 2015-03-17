@@ -9,13 +9,24 @@ class LinksControllerTest < ActionController::TestCase
     post :create, original_url: 'blub.de'
 
     assert_response :success
-    assert_not_nil assigns(:link)
   end
 
   test "post create with empty url" do
     post :create, original_url: ''
 
     assert_equal root_url, response.location
+  end
+
+  test "xhr post create" do
+    original_url = 'blub.de'
+    xhr :post, :create, original_url: original_url
+
+    assert_response :success
+
+    response_json = JSON.parse(response.body)
+
+    assert_equal "http://#{original_url}", response_json["original_url"]
+    assert_match /\A(http|https):\/\/.*\/[a-zA-Z]{7}\z/, response_json["token_url"]
   end
 
   test "get show" do
