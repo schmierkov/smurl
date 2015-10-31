@@ -1,4 +1,5 @@
 class LinksController < ApplicationController
+  skip_before_filter :verify_authenticity_token, only: [:create]
   before_filter :clean_up
 
   def index
