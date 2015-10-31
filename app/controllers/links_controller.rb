@@ -19,12 +19,9 @@ class LinksController < ApplicationController
   end
 
   def show
-    if link = Link.where(link_token_param).first
-      link.update(hits: link.hits + 1)
-      render nothing: true, status: 301, location: link.original_url, layout: false
-    else
-      render nothing: true, status: 404
-    end
+    link = Link.find_by!(token: link_token_param[:token])
+    link.update(hits: link.hits + 1)
+    render nothing: true, status: 301, location: link.original_url, layout: false
   end
 
   private

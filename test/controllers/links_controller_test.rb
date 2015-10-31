@@ -40,8 +40,8 @@ class LinksControllerTest < ActionController::TestCase
   test "get show with empty token" do
     link = create :link
 
-    get :show, token: ''
-
-    assert_response :not_found
+    assert_raises(ActiveRecord::RecordNotFound) {
+      get :show, token: ''
+    }
   end
 end
