@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  rescue_from ActionController::ParameterMissing, with: :redirect_to_root
+  rescue_from ActionController::ParameterMissing, with: :render_422
 
   private
 
-  def redirect_to_root
-    redirect_to root_url
+  def render_422
+    render json: { error: 'Parameter missing!' }, status: :unprocessable_entity
   end
 end
