@@ -10,17 +10,50 @@
 
 <script>
   <!--
+    $(document).ajaxSend(function(e, xhr, options) {
+      var token = $("meta[name='csrf-token']").attr("content");
+      xhr.setRequestHeader("X-CSRF-Token", token);
+    });
+
+    window.cleanValidationError = function (message) {
+      $('#original_url').parent().removeClass('has-error');
+      $("#result").empty().append(message);
+    };
+
+    window.setValidationError = function (message) {
+      $('#original_url').parent().addClass('has-error');
+      $("#result").empty().append(message);
+    };
+
     $("form").submit(function( event ) {
       event.preventDefault();
 
-      var $form = $(this),
-        url_param = $form.find("input[name='original_url']").val(),
-        url = $form.attr("action");
+      var $form = $(this);
+      var url_param = $form.find("input[name='original_url']").val();
 
-      var posting = $.post(url, { original_url: url_param } );
-      posting.done(function(data) {
-        $("#result").empty().append(data.token_url);
+      if(url_param == '') {
+        setValidationError();
+        return false;
+      }
+
+      $.ajax({
+        url: this.action,
+        method: this.method,
+        data: {
+          original_url: url_param,
+          format: 'json'
+        },
+        statusCode: {
+          201: function(xhr) {
+            cleanValidationError(xhr.token_url);
+          },
+          422: function(xhr) {
+            setValidationError(xhr.responseJSON.error);
+          }
+        }
       });
+
+      return false;
     });
 
     $('#original_url').keydown(function() {
