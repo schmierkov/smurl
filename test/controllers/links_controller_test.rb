@@ -14,7 +14,7 @@ class LinksControllerTest < ActionController::TestCase
   test "post create with empty url" do
     post :create, original_url: ''
 
-    assert_equal root_url, response.location
+    assert_response :unprocessable_entity
   end
 
   test "xhr post create" do
