@@ -10,9 +10,13 @@ class LinksController < ApplicationController
     link = Link.where(original_url: normalized_url).first_or_create
 
     if link.persisted?
-      render json: { original_url: link.original_url, token_url: link_url(token: link.token) }
+      render json: {
+          notice:       "Created",
+          original_url: link.original_url,
+          token_url:    link_url(token: link.token)
+        }, status: :created
     else
-      redirect_to root_path
+      render_422
     end
   end
 
