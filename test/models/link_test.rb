@@ -11,6 +11,16 @@ class LinkTest < ActiveSupport::TestCase
     assert_equal true, @link.valid?
   end
 
+  test 'original_url too long' do
+    @link.original_url = 'a'*2001
+    assert_equal false, @link.valid?
+  end
+
+  test 'original_url not too long' do
+    @link.original_url = 'a'*2000
+    assert_equal true, @link.valid?
+  end
+
   test 'original_url blank' do
     @link.original_url = ''
     assert_equal false, @link.valid?

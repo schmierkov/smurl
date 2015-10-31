@@ -1,7 +1,10 @@
 class Link < ActiveRecord::Base
   LETTERS = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
 
-  validates :original_url, presence: true, allow_nil: false
+  validates :original_url,
+    presence: true,
+    allow_nil: false,
+    length: { maximum: 2000 }
 
   before_create :generate_token
 
