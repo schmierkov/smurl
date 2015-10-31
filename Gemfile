@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 
+gem 'arel', '6.0.0.beta2'
 gem 'rails', '4.2.0.beta1'
 gem 'pg'
 gem 'uglifier', '>= 1.3.0' # Use Uglifier as compressor for JavaScript assets
