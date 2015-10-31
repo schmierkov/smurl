@@ -5,11 +5,19 @@ class Link < ActiveRecord::Base
 
   before_create :generate_token
 
+  def token_url
+    "http://smurl.schmierkov.de/#{token}"
+  end
+
   private
 
   def generate_token
     begin
       self.token = (0...7).map { LETTERS[rand(LETTERS.length)] }.join
-    end while self.class.exists?(token: token)
+    end while token_exists?
+  end
+
+  def token_exists?
+    self.class.exists?(token: token) || 'listings' == token
   end
 end

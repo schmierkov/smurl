@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Hits</th>
+      <th>Original Url</th>
+      <th>Short Url</th>
+    </tr>
+  </thead>
+  <% @links.each do |link| %>
+    <tr>
+      <td><%= link.hits %></td>
+      <td class="text-left"><%= link_link link.original_url %></td>
+      <td class="text-left"><%= link_link link.token_url %></td>
+    </tr>
+  <% end %>
+</table>

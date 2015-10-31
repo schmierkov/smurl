@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   root 'links#index'
 
-  get '/:token' => 'links#show', as: :link
-
   resource :links, only: [:create]
+  resources :listings, only: [:index]
+
+  get '/:token' => 'links#show', as: :link
 end
