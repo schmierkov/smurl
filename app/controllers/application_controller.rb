@@ -10,4 +10,11 @@ class ApplicationController < ActionController::Base
   def render_422
     render json: { error: 'Parameter missing!' }, status: :unprocessable_entity
   end
+
+  def authenticate
+    return true unless Rails.env.production?
+    authenticate_or_request_with_http_basic('FooBar') do |username, password|
+      username == ENV['HTTP_AUTHENTICATION_LOGIN'] && password == ENV['HTTP_AUTHENTICATION_PASSWORD']
+    end
+  end
 end
