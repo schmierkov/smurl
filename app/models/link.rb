@@ -2,8 +2,6 @@ class Link < ActiveRecord::Base
   LETTERS = [('a'..'z'), ('A'..'Z')].map { |i| i.to_a }.flatten
 
   validates :original_url, presence: true, allow_nil: false
-  validates_uniqueness_of :original_url
-  validates_uniqueness_of :token
 
   before_create :generate_token
 
